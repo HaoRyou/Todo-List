@@ -70,6 +70,7 @@ function display_project(dataset){
         const buttonforproject = document.createElement('button');
         buttonforproject.textContent = project.title;
         buttonforproject.addEventListener('click', function(){
+            clearscreen();
             displaymain(project.title);
         }); 
         user.appendChild(buttonforproject);
@@ -113,3 +114,9 @@ function displaymain(title){
     
 }
 
+function clearscreen(){
+    const element = document.getElementById('maindata');
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+}
+}
