@@ -1,4 +1,4 @@
-import ".styles.css";
+//import ".styles.css";
 
 class infotask{
     constructor(title,detail,dueday, priority){
@@ -20,7 +20,7 @@ class Project{
         this.data.push(task);
     }
     remove(task){
-        this.data = this.data.filter(project => project.task !== task);
+        this.data = this.data.filter(project => project.title !== task);
     }
 }
 
@@ -30,7 +30,7 @@ class main_storage{
     }
     add(title){
         const newproject = new Project(title);
-        storage.push(project);
+        this.storage.push(newproject);
     }
 
     findbytitle(title){
@@ -65,20 +65,20 @@ display_project(main_Data);
 
 
 function display_project(dataset){
-    const project = document.getElementById('user');
+    const user = document.getElementById('user');
     dataset.storage.forEach(project => {
         const buttonforproject = document.createElement('button');
         buttonforproject.textContent = project.title;
         buttonforproject.addEventListener('click', function(){
             displaymain(project.title);
         }); 
-        project.appendChild(buttonforproject);
+        user.appendChild(buttonforproject);
     });
 }
 
 function displaymain(title){
     const output = document.getElementById('maindata');
-    main_Data.findbytitle(title).forEach(task => {
+    main_Data.findbytitle(title).data.forEach(task => {
         const maindiv = document.createElement('div');
         maindiv.id = `Maindiv${task.title}`;
 
@@ -86,19 +86,19 @@ function displaymain(title){
         const h = document.createElement("h3");
         h.textContent = task.title;
         const p = document.createElement("p");
-        p.textContent = tasl.detail;
+        p.textContent = task.detail;
 
         const removedata = document.createElement('button');
         removedata.textContent="Delete Tasks";
         removedata.addEventListener('click' ,function(){
-            main_Data.findbytitle(title).remove(task);
-            output.removeChild(`Maindiv${task.title}`);
+            main_Data.findbytitle(title).remove(task.title);
+            output.removeChild(document.getElementById(`Maindiv${task.title}`));
         })
 
         div1.appendChild(h);
         div1.appendChild(p);
-        div.appendChild(removedata);
-        maindiv.appendChild(div);
+        div1.appendChild(removedata);
+        maindiv.appendChild(div1);
 
         const div2 = document.createElement('div');
         const p1 = document.createElement("p");
