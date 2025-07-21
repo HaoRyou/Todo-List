@@ -1,13 +1,11 @@
 import ".styles.css";
 
-let storage = [];
-
 class infotask{
-    constructor(title,detail,startday,enday){
+    constructor(title,detail,dueday, priority){
         this.title = title.trim();
         this.detail = detail?.trim?.() || '';
-        this.startday = startday || '';
-        this.enday = enday || '';
+        this.dueday = dueday || '';
+        this.priority = priority;
     }
 
 }
@@ -17,9 +15,12 @@ class Project{
         this.title = title;
         this.data = [];
     }
-    add(title, detail = '', startday = '', enday =''){
-        const task = new infotask(title,detail,startday,enday);
+    add(title, detail = '', dueday = '', priority){
+        const task = new infotask(title,detail,dueday,priority);
         this.data.push(task);
+    }
+    remove(task){
+        this.data = this.data.filter(project => project.task !== task);
     }
 }
 
@@ -39,34 +40,59 @@ class main_storage{
 
 const main_Data = new main_storage();
 
+// Add sample projects
+main_Data.add("Web App");
+main_Data.add("Study Plan");
+main_Data.add("Grocery List");
+
+// Add tasks to "Web App" project
+const webApp = main_Data.findbytitle("Web App");
+webApp.add("Setup backend", "Create server and database schema", "2025-07-25", "High");
+webApp.add("Build frontend", "Design UI components", "2025-07-27", "Medium");
+
+// Add tasks to "Study Plan"
+const studyPlan = main_Data.findbytitle("Study Plan");
+studyPlan.add("Review JS", "Closures, Promises, DOM", "2025-07-22", "High");
+studyPlan.add("Practice DSA", "Leetcode & mock interviews", "2025-07-24", "High");
+
+// Add tasks to "Grocery List"
+const grocery = main_Data.findbytitle("Grocery List");
+grocery.add("Buy milk", "Almond milk if available", "", "Low");
+grocery.add("Buy veggies", "Carrots, spinach, and broccoli", "", "Medium");
+
+
+display_project(main_Data);
+
 
 function display_project(dataset){
     const project = document.getElementById('user');
-    dataset.forEach(element => {
+    dataset.storage.forEach(project => {
         const buttonforproject = document.createElement('button');
-        buttonforproject.textContent = element.title;
+        buttonforproject.textContent = project.title;
         buttonforproject.addEventListener('click', function(){
-            displaymain(element.title);
+            displaymain(project.title);
         }); 
         project.appendChild(buttonforproject);
     });
 }
 
 function displaymain(title){
-    clearscreen();
     const output = document.getElementById('maindata');
-    main_Data.findbytitle(title).forEach(element => {
+    main_Data.findbytitle(title).forEach(task => {
         const maindiv = document.createElement('div');
-        maindiv.classList = "Maindiv";
+        maindiv.id = `Maindiv${task.title}`;
 
         const div1 = document.createElement('div');
         const h = document.createElement("h3");
-        h.textContent = element.title;
+        h.textContent = task.title;
         const p = document.createElement("p");
-        p.textContent = element.detail;
+        p.textContent = tasl.detail;
+
         const removedata = document.createElement('button');
+        removedata.textContent="Delete Tasks";
         removedata.addEventListener('click' ,function(){
-            removecurrentdata(element);
+            main_Data.findbytitle(title).remove(task);
+            output.removeChild(`Maindiv${task.title}`);
         })
 
         div1.appendChild(h);
@@ -76,25 +102,14 @@ function displaymain(title){
 
         const div2 = document.createElement('div');
         const p1 = document.createElement("p");
-        p1.textContent = element.startday;
+        p1.textContent = task.dueday;
         const p2 = document.createElement("p");
-        p2.textContent = element.enday;
+        p2.textContent = task.priority;
         div2.appendChild(p1);
         div2.appendChild(p2);
         maindiv.appendChild(div2);
-        
+        output.appendChild(maindiv);
     })
-
+    
 }
 
-
-function clearscreen(){
-    const maindata = document.getElementById(maindata);
-    while(main_Data.firstChild){
-        main_Data.removeChild (main_Data.firstChild);
-    }
-}
-
-function removecurrentdata(element){
-
-}

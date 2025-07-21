@@ -19,9 +19,36 @@
             </div>
 
         </div>
-        <div class="Maindata" id="maindata">
+        <div class="right">
+            <button id="Add_task">Add Tasks</button>
+            <div class="Maindata" id="maindata">
+                <div class="User_input">
+                    <div>
+                        <label for="title">Title: </label>
+                        <input type="text" name="title" required>
+                    </div>
+                    <div>
+                        <label for="detail">Description: </label>
+                        <input type="text" name="detail">
+                    </div>
+                    <div>
+                        <label for="Dueday">Due Day: </label>
+                        <input type="date" name="Dueday">
+                    </div>
+                    <div>
+                        <label for="status">Status</label>
+                        <select name="status" id="status">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select> 
+                    </div>     
+                    <button type="submit">Submit</button>
+                </div>
 
+            </div>
         </div>
+        
     </div>
 </body>
 </html>
