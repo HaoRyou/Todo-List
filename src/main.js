@@ -53,7 +53,7 @@ webApp.add("Build frontend", "Design UI components", "2025-07-27", "Medium");
 // Add tasks to "Study Plan"
 const studyPlan = main_Data.findbytitle("Study Plan");
 studyPlan.add("Review JS", "Closures, Promises, DOM", "2025-07-22", "High");
-studyPlan.add("Practice DSA", "Leetcode & mock interviews", "2025-07-24", "High");
+studyPlan.add("Practice DSA", "Leetcode & mock interviews", "2025-07-21", "High");
 
 // Add tasks to "Grocery List"
 const grocery = main_Data.findbytitle("Grocery List");
@@ -120,3 +120,57 @@ function clearscreen(){
         element.removeChild(element.firstChild);
 }
 }
+
+const allinone = document.getElementById('all');
+allinone.addEventListener("click", function(){
+    clearscreen();
+    main_Data.storage.forEach(project => {
+        displaymain(project.title);
+    })
+})
+
+const today = document.getElementById('today');
+today.addEventListener('click', function(){
+    clearscreen();
+    const now = new Date();
+    const todayindetail = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const output = document.getElementById('maindata');
+    main_Data.storage.forEach(project => {
+        const projectdata = main_Data.findbytitle(project.title).data;
+        projectdata.forEach(task =>{
+            const userdate = new Date(task.dueday + 'T00:00:00');
+            if(userdate.getDate() === todayindetail.getDate()){
+                const maindiv = document.createElement('div');
+        maindiv.id = `Maindiv${task.title}`;
+
+        const div1 = document.createElement('div');
+        const h = document.createElement("h3");
+        h.textContent = task.title;
+        const p = document.createElement("p");
+        p.textContent = task.detail;
+
+        const removedata = document.createElement('button');
+        removedata.textContent="Delete Tasks";
+        removedata.addEventListener('click' ,function(){
+            main_Data.findbytitle(title).remove(task.title);
+            output.removeChild(document.getElementById(`Maindiv${task.title}`));
+        })
+
+        div1.appendChild(h);
+        div1.appendChild(p);
+        div1.appendChild(removedata);
+        maindiv.appendChild(div1);
+
+        const div2 = document.createElement('div');
+        const p1 = document.createElement("p");
+        p1.textContent = task.dueday;
+        const p2 = document.createElement("p");
+        p2.textContent = task.priority;
+        div2.appendChild(p1);
+        div2.appendChild(p2);
+        maindiv.appendChild(div2);
+        output.appendChild(maindiv);
+            }
+        })
+    })
+} )
