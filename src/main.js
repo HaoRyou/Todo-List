@@ -63,6 +63,7 @@ grocery.add("Buy veggies", "Carrots, spinach, and broccoli", "", "Medium");
 
 display_project(main_Data);
 
+let currentproject = null;
 
 function display_project(dataset){
     const user = document.getElementById('user');
@@ -70,12 +71,44 @@ function display_project(dataset){
         const buttonforproject = document.createElement('button');
         buttonforproject.textContent = project.title;
         buttonforproject.addEventListener('click', function(){
+            currentproject = project;
             clearscreen();
             displaymain(project.title);
-        }); 
+        });
+        
         user.appendChild(buttonforproject);
     });
 }
+
+document.getElementById('submit').addEventListener('click', ()=>{
+    if(!currentproject){
+        alert("Please select a project first.");
+        return;
+    }
+
+    const usertitle = document.getElementById('title').value.trim();
+    const userdetail = document.getElementById('detail').value.trim();
+    const userdueday = document.getElementById('dueday').value;
+    const userstatus = document.getElementById('status').value;
+
+    if(!usertitle){
+        alert("Title is required");
+        return;
+    }
+
+    currentproject.add(usertitle,userdetail,userdueday,userstatus);
+    
+    user_input.style.display = "none";
+    document.getElementById('title').value = '';
+    document.getElementById('detail').value = '';
+    document.getElementById('dueday').value = '';
+    document.getElementById('status').value= 'Low';
+
+    clearscreen();
+    displaymain(currentproject.title);
+})
+
+
 
 function displaymain(title){
     const output = document.getElementById('maindata');
@@ -174,3 +207,13 @@ today.addEventListener('click', function(){
         })
     })
 } )
+
+const user_input = document.getElementById('userinput');
+const add_task = document.getElementById('Add_task');
+add_task.addEventListener('click', function(){
+    if(user_input.style.display === "none"){
+        user_input.style.display = 'flex';
+    } else{
+        user_input.style.display = "none";
+    } 
+});
