@@ -118,7 +118,7 @@ body, html {
     border-radius: 4px;
 }
 
-.User_input button[type="submit"] {
+.User_input button[type="submit"] ,#projectinput button{
     margin-top: 10px;
     padding: 10px;
     background-color: #27ae60;

@@ -67,6 +67,9 @@ let currentproject = null;
 
 function display_project(dataset){
     const user = document.getElementById('user');
+    while (user.firstChild) {
+        user.removeChild(user.firstChild);
+    }
     dataset.storage.forEach(project => {
         const buttonforproject = document.createElement('button');
         buttonforproject.textContent = project.title;
@@ -154,6 +157,7 @@ function clearscreen(){
 }
 }
 
+
 const allinone = document.getElementById('all');
 allinone.addEventListener("click", function(){
     clearscreen();
@@ -217,3 +221,41 @@ add_task.addEventListener('click', function(){
         user_input.style.display = "none";
     } 
 });
+
+
+const createproject = document.getElementById('newproject');
+createproject.addEventListener('click' , ()=>{
+    const element = document.getElementById('projectinput');
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+    const userproject = document.createElement('div');
+    userproject.style.display = 'flex';
+    const userinput = document.getElementById('projectinput');
+    const projectlabel = document.createElement('label');
+    const projectinput = document.createElement('input');
+    const projectsubmit = document.createElement('button');
+    projectsubmit.type = 'submit';
+    projectsubmit.textContent = 'Submit';
+
+    projectinput.type = "text";
+    projectinput.name = "createproject";
+    projectinput.id = "createproject";
+    projectinput.required = true;
+    userproject.appendChild(projectlabel);
+    userproject.appendChild(projectinput);
+    userproject.appendChild(projectsubmit);
+    userinput.appendChild(userproject);
+
+    projectsubmit.addEventListener('click', ()=>{
+        const text = projectinput.value;
+        main_Data.add(text);
+        projectinput.value='';
+        userproject.style.display = 'none';
+
+        display_project(main_Data);
+
+
+    })
+
+}) 
