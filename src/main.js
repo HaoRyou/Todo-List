@@ -1,4 +1,4 @@
-//import ".styles.css";
+import "./styles.css";
 
 class infotask{
     constructor(title,detail,dueday, priority){
@@ -67,6 +67,7 @@ let currentproject = null;
 
 function display_project(dataset){
     const user = document.getElementById('user');
+    console.log(document);
     while (user.firstChild) {
         user.removeChild(user.firstChild);
     }
@@ -189,7 +190,7 @@ today.addEventListener('click', function(){
         const removedata = document.createElement('button');
         removedata.textContent="Delete Tasks";
         removedata.addEventListener('click' ,function(){
-            main_Data.findbytitle(title).remove(task.title);
+            main_Data.findbytitle(task).remove(task.title);
             output.removeChild(document.getElementById(`Maindiv${task.title}`));
         })
 
